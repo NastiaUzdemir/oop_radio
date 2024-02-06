@@ -6,17 +6,35 @@ import org.junit.jupiter.api.Test;
 public class RadioTest {
 
     @Test
+    public void testSetCurrentNumberStation() {
+        Radio radio = new Radio(10);
+
+        radio.setCurrentNumberStation(5);
+        Assertions.assertEquals(5, radio.getCurrentNumberStation());
+
+        // Проверка, что если номер станции больше, чем количество радиостанций, ничего не происходит
+        radio.setCurrentNumberStation(15);
+        Assertions.assertEquals(5, radio.getCurrentNumberStation());
+
+        // Проверка, что если номер станции меньше нуля, ничего не происходит
+        radio.setCurrentNumberStation(-1);
+        Assertions.assertEquals(5, radio.getCurrentNumberStation());
+
+    }
+
+    @Test
     public void testNext() {
         Radio radio = new Radio();
 
+
         // Проверка переключения на следующую станцию
         radio.next();
-        assert radio.getCurrentNumberStation() == 1;
+        Assertions.assertEquals(1, radio.getCurrentNumberStation());
 
         // Проверка переключения через конечные значения (граничащие значения)
         radio.setCurrentNumberStation(9);
         radio.next();
-        assert radio.getCurrentNumberStation() == 0;
+        Assertions.assertEquals(0, radio.getCurrentNumberStation());
 
     }
 
@@ -26,30 +44,12 @@ public class RadioTest {
 
         // Проверка переключения на предыдущую станцию
         radio.prev();
-        assert radio.getCurrentNumberStation() == 9;
+        Assertions.assertEquals(9, radio.getCurrentNumberStation());
 
         // Граничащие значения
         radio.setCurrentNumberStation(0);
         radio.prev();
-        assert radio.getCurrentNumberStation() == 9;
-
-    }
-
-    @Test
-    public void testSetStation() {
-        Radio radio = new Radio();
-
-        // Проверка установки станции в пределах допустимых значений
-        radio.setStation(5);
-        assert radio.getCurrentNumberStation() == 5;
-
-
-        // Проверка установки станции за пределами допустимых значений
-        radio.setStation(10);
-        assert radio.getCurrentNumberStation() == 5;
-
-        radio.setStation(-10);
-        assert radio.getCurrentNumberStation() == 5;
+        Assertions.assertEquals(9, radio.getCurrentNumberStation());
 
     }
 
